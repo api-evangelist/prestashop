@@ -1,0 +1,65 @@
+{
+    "name": "PrestaShop",
+    "description": "Create your online store with PrestaShop's free shopping cart software. Build an ecommerce website and start selling online with hundreds of powerful features.",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/28287-doc-prestashop-com.jpg",
+    "tags": [
+        "api provider",
+        "commerce",
+        "have api"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/prestashop\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "PrestaShop",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/28287-doc-prestashop-com.jpg",
+            "humanURL": "http:\/\/prestashop.com",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-postman-collecction",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/prestashop-postman-collection.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/prestashop"
+        },
+        {
+            "type": "Developers",
+            "url": "http:\/\/doc.prestashop.com\/dashboard.action"
+        },
+        {
+            "type": "Email",
+            "url": "contact@prestashop.com"
+        },
+        {
+            "type": "Email",
+            "url": "privacy@prestashop.com"
+        },
+        {
+            "type": "Email",
+            "url": "legal@prestashop.com"
+        },
+        {
+            "type": "Getting Started",
+            "url": "http:\/\/doc.prestashop.com\/display\/PS17\/Getting+started"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/PrestaShop"
+        },
+        {
+            "type": "Website",
+            "url": "http:\/\/prestashop.com"
+        }
+    ]
+}
