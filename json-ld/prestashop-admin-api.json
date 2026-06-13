@@ -1,0 +1,32 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebAPI",
+  "name": "PrestaShop Admin API",
+  "description": "The PrestaShop Admin API is a modern REST API introduced in PrestaShop 9 based on API Platform framework using CQRS patterns. It supports OAuth 2.0 client credentials authentication and provides access to administrative endpoints for managing store configuration, products, orders, and other domain resources.",
+  "url": "https://devdocs.prestashop-project.org/9/admin-api/",
+  "documentation": "https://devdocs.prestashop-project.org/9/admin-api/",
+  "provider": {
+    "@type": "Organization",
+    "name": "PrestaShop",
+    "url": "https://www.prestashop.com/"
+  },
+  "termsOfService": "https://prestashop.com/prestashop-offers/",
+  "license": "https://github.com/PrestaShop/ps_apiresources/blob/main/LICENSE.md",
+  "keywords": [
+    "e-commerce",
+    "admin",
+    "OAuth 2.0",
+    "CQRS",
+    "API Platform",
+    "products",
+    "orders",
+    "REST API"
+  ],
+  "potentialAction": [
+    {
+      "@type": "Action",
+      "name": "Authorization Guide",
+      "url": "https://devdocs.prestashop-project.org/9/admin-api/authorization/"
+    }
+  ]
+}

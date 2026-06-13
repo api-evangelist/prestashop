@@ -1,0 +1,39 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://www.prestashop.com/",
+  "name": "PrestaShop",
+  "description": "PrestaShop is an open-source e-commerce platform with a REST API for managing products, categories, orders, customers, carriers, stock, and tax rules for online stores.",
+  "url": "https://www.prestashop.com/",
+  "sameAs": [
+    "https://github.com/PrestaShop",
+    "https://www.linkedin.com/company/prestashop",
+    "https://x.com/PrestaShop"
+  ],
+  "knowsAbout": [
+    "E-Commerce",
+    "Open Source",
+    "Online Store Management",
+    "REST API",
+    "OAuth 2.0",
+    "PHP",
+    "Symfony"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "PrestaShop Offers",
+    "url": "https://prestashop.com/prestashop-offers/"
+  },
+  "subjectOf": [
+    {
+      "@type": "WebSite",
+      "name": "PrestaShop Developer Documentation",
+      "url": "https://devdocs.prestashop-project.org/"
+    },
+    {
+      "@type": "Blog",
+      "name": "PrestaShop Developers Blog",
+      "url": "https://build.prestashop-project.org/"
+    }
+  ]
+}

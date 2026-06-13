@@ -1,0 +1,32 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebAPI",
+  "name": "PrestaShop Webservice API",
+  "description": "The PrestaShop Webservice API enables third-party applications to access and manage shop data through CRUD operations on 60+ resources including products, categories, orders, customers, carriers, stock movements, invoices, tax rules, and more. Authentication uses HTTP Basic Auth with a store-generated API key.",
+  "url": "https://devdocs.prestashop-project.org/9/webservice/",
+  "documentation": "https://devdocs.prestashop-project.org/9/webservice/",
+  "provider": {
+    "@type": "Organization",
+    "name": "PrestaShop",
+    "url": "https://www.prestashop.com/"
+  },
+  "termsOfService": "https://prestashop.com/prestashop-offers/",
+  "license": "https://github.com/PrestaShop/PrestaShop/blob/develop/LICENSE.md",
+  "keywords": [
+    "e-commerce",
+    "products",
+    "orders",
+    "customers",
+    "inventory",
+    "catalog",
+    "REST API",
+    "HTTP Basic Auth"
+  ],
+  "potentialAction": [
+    {
+      "@type": "Action",
+      "name": "Get Started",
+      "url": "https://devdocs.prestashop-project.org/9/webservice/getting-started/"
+    }
+  ]
+}
