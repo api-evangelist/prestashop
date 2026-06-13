@@ -1,0 +1,60 @@
+name: PrestaShop FinOps
+description: Financial operations and cost management guidance for PrestaShop API and platform usage
+url: https://prestashop.com/prestashop-offers/
+
+cost_model:
+  type: platform-subscription
+  notes: >
+    PrestaShop's API is not priced independently — it is included at no additional
+    cost with all PrestaShop plans. Costs are based on the platform plan chosen
+    (Classic is free/self-hosted; Hosted is a monthly subscription; Enterprise is
+    custom PaaS pricing). API usage itself does not generate additional charges.
+
+plans:
+
+  - name: Classic (Self-Hosted)
+    monthly_cost_eur: 0
+    annual_cost_eur: 0
+    notes: >
+      Software is free to download. Costs are limited to self-managed hosting
+      (VPS, dedicated server, or shared hosting), domain registration, SSL
+      certificate, and any paid modules or themes from the marketplace.
+    typical_hosting_cost_eur_per_month: 5-100
+    api_cost: none
+
+  - name: Hosted
+    monthly_cost_eur: 24
+    annual_cost_eur: 288
+    monthly_cost_monthly_billing_eur: 29
+    trial_days: 14
+    notes: >
+      Includes hosting on Gandi with 50 GB storage. Price starts at EUR 24/month
+      on annual commitment or EUR 29/month billed monthly. No extra API costs.
+    api_cost: none
+
+  - name: Enterprise
+    monthly_cost_eur: null
+    annual_cost_eur: null
+    notes: >
+      Custom PaaS pricing. Contact PrestaShop sales for a quote. Pricing is
+      tailored to traffic volume, storage needs, SLA requirements, and integration
+      complexity. No separate API usage fees.
+    api_cost: none
+
+cost_optimization:
+  - tip: Use the Classic (free) plan if you have technical resources to manage hosting independently
+    savings_potential: high
+  - tip: Choose annual billing on the Hosted plan to save approximately EUR 60 per year vs monthly billing
+    savings_potential: low-medium
+  - tip: Minimize third-party paid module costs by leveraging open-source community modules
+    savings_potential: medium
+  - tip: Cache API responses locally to reduce server load and avoid needing an infrastructure upgrade
+    savings_potential: medium
+  - tip: Use selective API fields (display parameter) to reduce payload size and improve performance
+    savings_potential: low
+
+marketplace_costs:
+  description: >
+    PrestaShop Marketplace offers both free and paid modules and themes. Paid modules
+    typically range from EUR 30 to EUR 300+ one-time or with recurring subscription costs.
+  notes: These are optional add-on costs and not part of core API access pricing.

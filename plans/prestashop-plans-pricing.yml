@@ -1,0 +1,74 @@
+name: PrestaShop Plans
+description: Pricing plans available for PrestaShop e-commerce platform
+url: https://prestashop.com/prestashop-offers/
+plans:
+
+  - name: Classic
+    description: Free open-source self-hosted PrestaShop platform with full control over your store
+    type: free
+    price:
+      amount: 0
+      currency: USD
+      period: one-time
+    features:
+      - Open-source PrestaShop 9 software
+      - Customizable Hummingbird theme
+      - Unlimited product catalog
+      - PrestaShop Checkout with PayPal
+      - Automated ads on Google, Facebook, and Instagram
+      - Update Assistant for easier maintenance
+      - Shipping service (eShip)
+      - Marketplace access via Back-Office
+      - SEO optimization tools
+      - Support for 190 countries and 20+ currencies
+      - Full Webservice REST API access
+      - Social media integration
+    api:
+      access: true
+      authentication: Basic Auth (API key)
+      resources: Full CRUD access to 60+ resources
+
+  - name: Hosted
+    description: Managed subscription service with hosting, support, and PrestaShop pre-installed
+    type: paid
+    price:
+      amount: 24
+      currency: EUR
+      period: month
+      notes: Starting at EUR 24/month (annual commitment) or EUR 29/month (month-to-month); 14-day free trial available
+    features:
+      - Everything in Classic plan
+      - Hosting with Gandi (50 GB storage)
+      - Professional store installation
+      - Automatic VAT calculation by customer location
+      - GDPR compliance and cookie management
+      - Email/phone support (6 days per week)
+      - Guided back-office onboarding tutorial
+      - Automatic updates and security patches
+    api:
+      access: true
+      authentication: Basic Auth (API key) and OAuth 2.0
+      resources: Full CRUD access to 60+ resources
+
+  - name: Enterprise
+    description: Platform-as-a-Service offering with managed cloud infrastructure, security, and maintenance for large merchants
+    type: paid
+    price:
+      amount: 0
+      currency: EUR
+      period: month
+      notes: Custom pricing; contact PrestaShop sales for a quote
+    features:
+      - Everything in Hosted plan
+      - Managed cloud infrastructure
+      - Advanced caching and server configurations
+      - Cloud storage for product images
+      - Dedicated technical account management
+      - SLA-backed uptime guarantees
+      - Enterprise-grade security and compliance
+      - Custom integrations and priority support
+      - Admin API with OAuth 2.0 (client credentials flow)
+    api:
+      access: true
+      authentication: OAuth 2.0 (client credentials)
+      resources: Full CRUD access to 60+ Webservice resources plus Admin API endpoints

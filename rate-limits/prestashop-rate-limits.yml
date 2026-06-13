@@ -1,0 +1,50 @@
+name: PrestaShop Rate Limits
+description: Rate limit information for the PrestaShop Webservice API and Admin API
+url: https://devdocs.prestashop-project.org/9/webservice/
+notes: >
+  PrestaShop does not impose fixed platform-level rate limits on its Webservice API
+  or Admin API. Since PrestaShop is primarily a self-hosted open-source platform,
+  rate limits are governed by the hosting environment (server capacity, web server
+  configuration, PHP settings) rather than by the PrestaShop software itself.
+  Merchants and developers are advised to optimize requests and use caching to
+  avoid overloading the server. For PrestaShop Hosted and Enterprise plans, any
+  rate limits are determined by the hosting infrastructure.
+
+limits:
+
+  - name: No Platform Rate Limit
+    type: requests
+    scope: global
+    limit: null
+    period: null
+    notes: >
+      PrestaShop's Webservice API does not enforce a built-in rate limit. Request
+      throughput is constrained only by the underlying server resources (CPU, memory,
+      database connections) of the hosting environment.
+
+  - name: Server-Side Throttling (Hosted)
+    type: requests
+    scope: per-store
+    limit: null
+    period: null
+    notes: >
+      For PrestaShop Hosted plan (Gandi infrastructure), server-side throttling may
+      apply based on hosting tier resources. Exact limits are not publicly documented;
+      contact PrestaShop support for specifics.
+
+  - name: PHP max_execution_time
+    type: time
+    scope: per-request
+    limit: 30
+    period: seconds
+    notes: >
+      Default PHP max_execution_time is 30 seconds per request on most hosting
+      environments. Long-running bulk API operations may time out if this limit
+      is not increased by the server administrator.
+
+recommendations:
+  - Implement exponential backoff and retry logic for transient errors
+  - Use filtered GET requests (output_format, display, filter parameters) to reduce response size
+  - Cache frequently read resources locally to minimize API calls
+  - Process bulk operations in batches to reduce server load
+  - Use the PrestaShop WebhookEventHandler or polling with filtering for change detection
