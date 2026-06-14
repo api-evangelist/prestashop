@@ -1,0 +1,1263 @@
+"""
+PrestaShop GraphQL Schema
+Conceptual schema derived from the PrestaShop Webservice API and Admin API.
+PrestaShop does not natively expose a GraphQL endpoint; this schema models
+the full domain for teams building a GraphQL layer over the REST API.
+Source: https://devdocs.prestashop-project.org/9/webservice/
+"""
+
+# ─────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────
+
+scalar DateTime
+scalar Date
+scalar Decimal
+scalar JSON
+
+# ─────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+enum OrderStatusEnum {
+  AWAITING_PAYMENT
+  PAYMENT_ACCEPTED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+  ON_BACKORDER
+  ERROR
+}
+
+enum StockMovementReason {
+  EMPLOYEE_EDITION
+  CUSTOMER_RETURN
+  SUPPLIER_ORDER
+  INVENTORY_CORRECTION
+  TRANSFER
+}
+
+enum ProductType {
+  SIMPLE
+  VIRTUAL
+  PACK
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  UNKNOWN
+}
+
+enum TaxBehavior {
+  TAX_INCLUDED
+  TAX_EXCLUDED
+}
+
+enum ImageType {
+  PRODUCT
+  CATEGORY
+  MANUFACTURER
+  SUPPLIER
+  EMPLOYEE
+  CMS
+}
+
+# ─────────────────────────────────────────
+# Shared Inputs
+# ─────────────────────────────────────────
+
+input Pagination {
+  page: Int
+  limit: Int
+  sortBy: String
+  sortOrder: SortOrder
+}
+
+input ProductFilter {
+  categoryId: ID
+  manufacturerId: ID
+  supplierId: ID
+  active: Boolean
+  inStock: Boolean
+  minPrice: Decimal
+  maxPrice: Decimal
+  search: String
+}
+
+input OrderFilter {
+  customerId: ID
+  stateId: ID
+  carrierId: ID
+  dateFrom: Date
+  dateTo: Date
+  reference: String
+}
+
+input CustomerFilter {
+  email: String
+  groupId: ID
+  active: Boolean
+  newsletter: Boolean
+  search: String
+}
+
+# ─────────────────────────────────────────
+# Catalog Types
+# ─────────────────────────────────────────
+
+"""A sellable item in the PrestaShop catalog."""
+type Product {
+  id: ID!
+  reference: String
+  ean13: String
+  upc: String
+  mpn: String
+  name: String!
+  description: String
+  descriptionShort: String
+  price: Decimal!
+  wholesalePrice: Decimal
+  unitPrice: Decimal
+  weight: Decimal
+  width: Decimal
+  height: Decimal
+  depth: Decimal
+  minimalQuantity: Int
+  quantity: Int
+  available: Boolean!
+  availableForOrder: Boolean!
+  active: Boolean!
+  type: ProductType!
+  taxRuleGroupId: ID
+  taxRuleGroup: TaxRuleGroup
+  categoryId: ID
+  defaultCategory: Category
+  categories: [Category!]
+  manufacturer: Manufacturer
+  supplier: Supplier
+  images: [Image!]
+  features: [ProductFeature!]
+  combinations: [ProductCombination!]
+  specificPrices: [SpecificPrice!]
+  attachments: [Attachment!]
+  tags: [Tag!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A product characteristic label, e.g. Material, Color."""
+type ProductFeature {
+  id: ID!
+  name: String!
+  position: Int
+  values: [ProductFeatureValue!]
+}
+
+"""A concrete value for a product feature, e.g. Cotton."""
+type ProductFeatureValue {
+  id: ID!
+  featureId: ID!
+  feature: ProductFeature
+  value: String!
+  custom: Boolean!
+}
+
+"""A variant dimension (e.g. Size, Color) that creates combinations."""
+type ProductAttribute {
+  id: ID!
+  name: String!
+  color: String
+  position: Int
+  group: ProductAttributeGroup
+}
+
+"""A group of product attributes, e.g. Size Group, Color Group."""
+type ProductAttributeGroup {
+  id: ID!
+  name: String!
+  publicName: String
+  groupType: String
+  position: Int
+  attributes: [ProductAttribute!]
+}
+
+"""
+A specific variant of a product formed by selecting one value per
+attribute group, e.g. T-Shirt in Red, Size M.
+"""
+type ProductCombination {
+  id: ID!
+  productId: ID!
+  product: Product
+  reference: String
+  ean13: String
+  price: Decimal
+  weight: Decimal
+  quantity: Int
+  minimalQuantity: Int
+  default: Boolean!
+  attributes: [ProductAttribute!]
+  images: [Image!]
+}
+
+"""A node in the product category tree."""
+type Category {
+  id: ID!
+  name: String!
+  description: String
+  metaTitle: String
+  metaDescription: String
+  linkRewrite: String!
+  active: Boolean!
+  position: Int
+  parentId: ID
+  parent: Category
+  children: [Category!]
+  products(pagination: Pagination): [Product!]
+  image: Image
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A product brand or maker."""
+type Manufacturer {
+  id: ID!
+  name: String!
+  description: String
+  shortDescription: String
+  metaTitle: String
+  metaDescription: String
+  active: Boolean!
+  image: Image
+  addresses: [Address!]
+  products(pagination: Pagination): [Product!]
+}
+
+"""A product supplier or wholesaler."""
+type Supplier {
+  id: ID!
+  name: String!
+  description: String
+  active: Boolean!
+  image: Image
+  addresses: [Address!]
+  products(pagination: Pagination): [Product!]
+}
+
+"""An image asset associated with a product, category, manufacturer, or supplier."""
+type Image {
+  id: ID!
+  resourceId: ID!
+  resourceType: ImageType!
+  position: Int
+  caption: String
+  url: String!
+  urlSmall: String
+  urlMedium: String
+  urlLarge: String
+}
+
+"""A downloadable file attached to a product."""
+type Attachment {
+  id: ID!
+  name: String!
+  description: String
+  file: String!
+  mimeType: String!
+  fileSize: Int
+}
+
+"""A search keyword associated with a product."""
+type Tag {
+  id: ID!
+  name: String!
+  languageId: ID
+  language: Language
+}
+
+"""A searchable tag stored in the search index."""
+type SearchTag {
+  id: ID!
+  tag: String!
+  languageId: ID
+  language: Language
+}
+
+# ─────────────────────────────────────────
+# Pricing & Promotions
+# ─────────────────────────────────────────
+
+"""A price rule that overrides the base price for a product under specific conditions."""
+type SpecificPrice {
+  id: ID!
+  productId: ID!
+  product: Product
+  combinationId: ID
+  customerId: ID
+  groupId: ID
+  shopId: ID
+  currencyId: ID
+  countryId: ID
+  fromQuantity: Int!
+  reduction: Decimal!
+  reductionType: String!
+  reductionTax: Boolean!
+  price: Decimal
+  from: DateTime
+  to: DateTime
+}
+
+"""
+A promotional rule that can be applied to a cart to give discounts,
+free shipping, or free gifts.
+"""
+type CartRule {
+  id: ID!
+  name: String!
+  description: String
+  code: String
+  minimumAmount: Decimal
+  minimumAmountTax: Boolean
+  reductionPercent: Decimal
+  reductionAmount: Decimal
+  reductionTax: Boolean
+  reductionProduct: ID
+  freeShipping: Boolean!
+  active: Boolean!
+  dateFrom: DateTime
+  dateTo: DateTime
+  quantity: Int
+  quantityPerUser: Int
+  highlight: Boolean
+  partialUse: Boolean
+}
+
+"""A voucher (materialized cart rule) associated with a specific order."""
+type Voucher {
+  id: ID!
+  cartRuleId: ID!
+  cartRule: CartRule
+  orderId: ID!
+  name: String!
+  value: Decimal!
+}
+
+# ─────────────────────────────────────────
+# Tax
+# ─────────────────────────────────────────
+
+"""A tax rate definition, e.g. EU VAT 20%."""
+type Tax {
+  id: ID!
+  name: String!
+  rate: Decimal!
+  active: Boolean!
+}
+
+"""A rule assigning a tax to a country/state/zip combination."""
+type TaxRule {
+  id: ID!
+  taxRuleGroupId: ID!
+  taxRuleGroup: TaxRuleGroup
+  taxId: ID!
+  tax: Tax
+  countryId: ID
+  country: Country
+  stateId: ID
+  state: State
+  zipCode: String
+  behavior: TaxBehavior!
+  description: String
+}
+
+"""A named collection of tax rules applied to products or shipping."""
+type TaxRuleGroup {
+  id: ID!
+  name: String!
+  active: Boolean!
+  taxRules: [TaxRule!]
+}
+
+# ─────────────────────────────────────────
+# Inventory
+# ─────────────────────────────────────────
+
+"""Current inventory level for a product or combination."""
+type Stock {
+  id: ID!
+  productId: ID!
+  product: Product
+  combinationId: ID
+  combination: ProductCombination
+  reference: String
+  ean13: String
+  quantity: Int!
+  usableQuantity: Int
+  physicalQuantity: Int
+  warehouse: Warehouse
+}
+
+"""Real-time availability state used on the storefront."""
+type StockAvailability {
+  id: ID!
+  productId: ID!
+  combinationId: ID
+  quantity: Int!
+  dependsOnStock: Boolean!
+  outOfStock: Int!
+  location: String
+}
+
+"""A record of inventory changing hands."""
+type StockMovement {
+  id: ID!
+  stockId: ID!
+  stock: Stock
+  employeeId: ID
+  employee: Employee
+  reason: StockMovementReason!
+  sign: Int!
+  physicalQuantityBefore: Int!
+  usableQuantityBefore: Int!
+  dateAdd: DateTime!
+}
+
+"""A physical or virtual location holding inventory."""
+type Warehouse {
+  id: ID!
+  name: String!
+  reference: String
+  managementType: String
+  address: Address
+  active: Boolean!
+}
+
+# ─────────────────────────────────────────
+# Orders
+# ─────────────────────────────────────────
+
+"""A completed or in-progress sales order."""
+type Order {
+  id: ID!
+  reference: String!
+  customerId: ID!
+  customer: Customer
+  carrierId: ID
+  carrier: Carrier
+  currencyId: ID!
+  currency: Currency
+  addressDeliveryId: ID
+  addressDelivery: Address
+  addressInvoiceId: ID
+  addressInvoice: Address
+  currentState: OrderState
+  cartId: ID
+  totalPaid: Decimal!
+  totalPaidReal: Decimal!
+  totalProducts: Decimal!
+  totalProductsWt: Decimal!
+  totalShipping: Decimal!
+  totalShippingTaxExcl: Decimal!
+  totalDiscount: Decimal!
+  shippingNumber: String
+  invoiceNumber: Int
+  invoiceDate: DateTime
+  deliveryNumber: Int
+  deliveryDate: DateTime
+  valid: Boolean!
+  gift: Boolean!
+  giftMessage: String
+  details: [OrderDetail!]
+  history: [OrderHistory!]
+  invoices: [OrderInvoice!]
+  orderCarrier: OrderCarrier
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A single line item within an order."""
+type OrderDetail {
+  id: ID!
+  orderId: ID!
+  productId: ID!
+  product: Product
+  combinationId: ID
+  productName: String!
+  productQuantity: Int!
+  productPrice: Decimal!
+  unitPriceTaxIncl: Decimal!
+  unitPriceTaxExcl: Decimal!
+  totalPriceTaxIncl: Decimal!
+  totalPriceTaxExcl: Decimal!
+  reduction: Decimal
+  originalProductPrice: Decimal
+  taxRate: Decimal
+}
+
+"""A status change event in the order lifecycle."""
+type OrderHistory {
+  id: ID!
+  orderId: ID!
+  orderStateId: ID!
+  orderState: OrderState
+  employeeId: ID
+  employee: Employee
+  dateAdd: DateTime!
+}
+
+"""A named status in the order lifecycle, e.g. Payment Accepted."""
+type OrderState {
+  id: ID!
+  name: String!
+  sendEmail: Boolean!
+  module: String
+  invoice: Boolean!
+  color: String
+  unremovable: Boolean!
+  hidden: Boolean!
+  logable: Boolean!
+  delivery: Boolean!
+  shipped: Boolean!
+  paid: Boolean!
+  pdfInvoice: Boolean!
+  pdfDelivery: Boolean!
+  deleted: Boolean!
+}
+
+"""A credit slip issued when an order is partially or fully refunded."""
+type OrderSlip {
+  id: ID!
+  orderId: ID!
+  order: Order
+  customerId: ID!
+  customer: Customer
+  shippingCost: Decimal!
+  amount: Decimal!
+  shippingCostAmount: Decimal!
+  partialRefund: Boolean!
+  conversionRate: Decimal!
+  dateAdd: DateTime!
+  dateUpd: DateTime!
+}
+
+"""An invoice document generated for an order."""
+type OrderInvoice {
+  id: ID!
+  orderId: ID!
+  number: Int!
+  deliveryNumber: Int
+  deliveryDate: DateTime
+  totalPaidTaxExcl: Decimal!
+  totalPaidTaxIncl: Decimal!
+  totalProductsTaxExcl: Decimal!
+  totalProductsTaxIncl: Decimal!
+  totalShippingTaxExcl: Decimal!
+  totalShippingTaxIncl: Decimal!
+  totalDiscountTaxExcl: Decimal!
+  totalDiscountTaxIncl: Decimal!
+  dateAdd: DateTime!
+}
+
+"""The carrier assigned to fulfill an order shipment."""
+type OrderCarrier {
+  id: ID!
+  orderId: ID!
+  carrierId: ID!
+  carrier: Carrier
+  trackingNumber: String
+  shippingCostTaxExcl: Decimal
+  shippingCostTaxIncl: Decimal
+  dateAdd: DateTime!
+}
+
+# ─────────────────────────────────────────
+# Customers
+# ─────────────────────────────────────────
+
+"""A registered shopper account."""
+type Customer {
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  gender: Gender
+  birthday: Date
+  active: Boolean!
+  newsletter: Boolean!
+  optin: Boolean!
+  isGuest: Boolean!
+  groupId: ID
+  group: CustomerGroup
+  defaultGroupId: ID
+  defaultGroup: CustomerGroup
+  addresses: [Address!]
+  orders(pagination: Pagination): [Order!]
+  carts(pagination: Pagination): [Cart!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A customer segment used for pricing, access, and promotions."""
+type CustomerGroup {
+  id: ID!
+  name: String!
+  priceDisplayMethod: Int!
+  showPrices: Boolean!
+  reductionPercent: Decimal!
+  customers(pagination: Pagination): [Customer!]
+}
+
+"""A customer service thread."""
+type CustomerThread {
+  id: ID!
+  customerId: ID
+  customer: Customer
+  shopId: ID
+  languageId: ID
+  contactId: ID
+  contact: Contact
+  orderId: ID
+  productId: ID
+  status: String!
+  token: String
+  messages: [CustomerMessage!]
+  dateAdd: DateTime!
+  dateUpd: DateTime!
+}
+
+"""A single message within a customer service thread."""
+type CustomerMessage {
+  id: ID!
+  customerThreadId: ID!
+  employeeId: ID
+  employee: Employee
+  customerId: ID
+  customer: Customer
+  message: String!
+  fileName: String
+  fileSize: Int
+  userAgent: String
+  read: Boolean!
+  privateMessage: Boolean!
+  dateAdd: DateTime!
+}
+
+# ─────────────────────────────────────────
+# Addresses & Geography
+# ─────────────────────────────────────────
+
+"""A postal address used for shipping, invoicing, or contact."""
+type Address {
+  id: ID!
+  alias: String
+  firstName: String!
+  lastName: String!
+  company: String
+  address1: String!
+  address2: String
+  postcode: String
+  city: String!
+  phone: String
+  phoneMobile: String
+  country: Country
+  state: State
+  active: Boolean!
+  deleted: Boolean!
+}
+
+"""A nation with shipping and tax implications."""
+type Country {
+  id: ID!
+  name: String!
+  isoCode: String!
+  callPrefix: Int
+  active: Boolean!
+  containsStates: Boolean!
+  needIdNumber: Boolean!
+  needZipCode: Boolean!
+  zipCodeFormat: String
+  addressFormat: String
+  zone: Zone
+  currency: Currency
+}
+
+"""A sub-national region (state, province, county)."""
+type State {
+  id: ID!
+  name: String!
+  isoCode: String!
+  active: Boolean!
+  country: Country
+  zone: Zone
+}
+
+"""A geographic shipping zone grouping countries and states."""
+type Zone {
+  id: ID!
+  name: String!
+  active: Boolean!
+  countries: [Country!]
+}
+
+# ─────────────────────────────────────────
+# Cart
+# ─────────────────────────────────────────
+
+"""An active or abandoned shopping cart."""
+type Cart {
+  id: ID!
+  customerId: ID
+  customer: Customer
+  guestId: ID
+  languageId: ID
+  language: Language
+  currencyId: ID
+  currency: Currency
+  carrierId: ID
+  carrier: Carrier
+  addressDeliveryId: ID
+  addressDelivery: Address
+  addressInvoiceId: ID
+  addressInvoice: Address
+  recycled: Boolean!
+  gift: Boolean!
+  giftMessage: String
+  mobileTheme: Boolean!
+  allowSeperatedPackage: Boolean!
+  products: [CartProduct!]
+  cartRules: [CartRule!]
+  totalProducts: Decimal
+  totalShipping: Decimal
+  totalWithTax: Decimal
+  dateAdd: DateTime!
+  dateUpd: DateTime!
+}
+
+"""A product line in a shopping cart."""
+type CartProduct {
+  id: ID!
+  cartId: ID!
+  productId: ID!
+  product: Product
+  combinationId: ID
+  combination: ProductCombination
+  quantity: Int!
+  unitPrice: Decimal
+}
+
+# ─────────────────────────────────────────
+# Shipping
+# ─────────────────────────────────────────
+
+"""A shipping method offered to customers at checkout."""
+type Carrier {
+  id: ID!
+  name: String!
+  delay: String
+  active: Boolean!
+  deleted: Boolean!
+  isModule: Boolean!
+  isFree: Boolean!
+  shippingHandling: Boolean!
+  shippingExternal: Boolean!
+  rangesBehavior: Int
+  maxWidth: Int
+  maxHeight: Int
+  maxDepth: Int
+  maxWeight: Decimal
+  groups: [CustomerGroup!]
+  zones: [Zone!]
+}
+
+"""An association between a carrier and a customer group."""
+type CarrierGroup {
+  carrierId: ID!
+  carrier: Carrier
+  groupId: ID!
+  group: CustomerGroup
+}
+
+# ─────────────────────────────────────────
+# Payments & Currency
+# ─────────────────────────────────────────
+
+"""A monetary currency supported by the shop."""
+type Currency {
+  id: ID!
+  name: String!
+  isoCode: String!
+  isoCodeNum: String
+  symbol: String
+  conversionRate: Decimal!
+  active: Boolean!
+  deleted: Boolean!
+  format: Int
+  blank: Boolean
+  decimals: Boolean
+}
+
+"""A restriction limiting which payment modules accept a given currency."""
+type CurrencyRestriction {
+  currencyId: ID!
+  currency: Currency
+  moduleId: ID!
+  module: Module
+}
+
+# ─────────────────────────────────────────
+# Internationalization
+# ─────────────────────────────────────────
+
+"""A locale/language installed in the shop."""
+type Language {
+  id: ID!
+  name: String!
+  isoCode: String!
+  languageCode: String!
+  locale: String
+  dateFormat: String
+  dateFormatFull: String
+  active: Boolean!
+  isRtl: Boolean!
+}
+
+"""A translated string value for a given language."""
+type Translation {
+  id: ID!
+  languageId: ID!
+  language: Language
+  domain: String!
+  key: String!
+  translation: String!
+}
+
+# ─────────────────────────────────────────
+# CMS
+# ─────────────────────────────────────────
+
+"""A grouping node for CMS content pages."""
+type CmsCategory {
+  id: ID!
+  name: String!
+  description: String
+  metaTitle: String
+  metaDescription: String
+  linkRewrite: String!
+  active: Boolean!
+  position: Int
+  parentId: ID
+  parent: CmsCategory
+  children: [CmsCategory!]
+  pages: [CmsPage!]
+}
+
+"""A static content page in the shop (e.g. About Us, FAQ)."""
+type CmsPage {
+  id: ID!
+  cmsCategoryId: ID!
+  cmsCategory: CmsCategory
+  linkRewrite: String!
+  metaTitle: String
+  metaDescription: String
+  content: String
+  active: Boolean!
+  position: Int
+  indexation: Boolean!
+}
+
+# ─────────────────────────────────────────
+# Administration
+# ─────────────────────────────────────────
+
+"""A PrestaShop shop instance within a multistore group."""
+type Shop {
+  id: ID!
+  name: String!
+  active: Boolean!
+  deleted: Boolean!
+  shopGroupId: ID
+  shopGroup: ShopGroup
+  themeId: ID
+  categoryId: ID
+  domain: String
+  domainSsl: String
+}
+
+"""A logical grouping of shops in a multistore configuration."""
+type ShopGroup {
+  id: ID!
+  name: String!
+  active: Boolean!
+  deleted: Boolean!
+  shareCustomers: Boolean!
+  shareOrder: Boolean!
+  shareStock: Boolean!
+  shops: [Shop!]
+}
+
+"""A back-office user with administrative access."""
+type Employee {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  active: Boolean!
+  profileId: ID
+  profile: Profile
+  shopId: ID
+  shop: Shop
+  lastConnection: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A named set of permissions assigned to employees."""
+type Profile {
+  id: ID!
+  name: String!
+  permissions: [Permission!]
+}
+
+"""A granular access right for a profile on a given tab/resource."""
+type Permission {
+  id: ID!
+  profileId: ID!
+  profile: Profile
+  tabId: ID
+  resource: String
+  view: Boolean!
+  add: Boolean!
+  edit: Boolean!
+  delete: Boolean!
+}
+
+"""An installed PrestaShop module (plugin)."""
+type Module {
+  id: ID!
+  name: String!
+  active: Boolean!
+  activeOnMobile: Boolean!
+  version: String
+  displayName: String
+  description: String
+  author: String
+}
+
+"""A global or shop-level configuration key/value pair."""
+type Configuration {
+  id: ID!
+  name: String!
+  value: String
+  shopGroupId: ID
+  shopId: ID
+  dateAdd: DateTime!
+  dateUpd: DateTime!
+}
+
+"""A hook point that modules register with to extend PrestaShop behavior."""
+type Hook {
+  id: ID!
+  name: String!
+  title: String
+  description: String
+  active: Boolean!
+  position: Boolean!
+  modules: [Module!]
+}
+
+# ─────────────────────────────────────────
+# Communication
+# ─────────────────────────────────────────
+
+"""A customer service contact form category."""
+type Contact {
+  id: ID!
+  email: String!
+  customerService: Boolean!
+  name: String!
+  description: String
+}
+
+"""A product customization submitted by a customer."""
+type Customization {
+  id: ID!
+  cartId: ID!
+  productId: ID!
+  product: Product
+  quantity: Int!
+  quantityRefunded: Int!
+  quantityReturned: Int!
+  inCart: Boolean!
+  fields: [CustomizationField!]
+}
+
+"""A single customization field value (text or file)."""
+type CustomizationField {
+  id: ID!
+  customizationId: ID!
+  index: Int!
+  type: String!
+  value: String!
+}
+
+"""An outgoing webhook event emitted by a PrestaShop module."""
+type Webhook {
+  id: ID!
+  name: String!
+  url: String!
+  secret: String
+  active: Boolean!
+  events: [String!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ─────────────────────────────────────────
+# Query Root
+# ─────────────────────────────────────────
+
+type Query {
+  # Catalog
+  product(id: ID!): Product
+  products(filter: ProductFilter, pagination: Pagination): [Product!]!
+  category(id: ID!): Category
+  categories(parentId: ID, pagination: Pagination): [Category!]!
+  manufacturer(id: ID!): Manufacturer
+  manufacturers(pagination: Pagination): [Manufacturer!]!
+  supplier(id: ID!): Supplier
+  suppliers(pagination: Pagination): [Supplier!]!
+  productFeature(id: ID!): ProductFeature
+  productFeatures(pagination: Pagination): [ProductFeature!]!
+  productAttributeGroup(id: ID!): ProductAttributeGroup
+  productAttributeGroups(pagination: Pagination): [ProductAttributeGroup!]!
+  tag(id: ID!): Tag
+  tags(pagination: Pagination): [Tag!]!
+
+  # Pricing
+  specificPrice(id: ID!): SpecificPrice
+  specificPrices(productId: ID, pagination: Pagination): [SpecificPrice!]!
+  cartRule(id: ID!): CartRule
+  cartRules(active: Boolean, pagination: Pagination): [CartRule!]!
+
+  # Tax
+  tax(id: ID!): Tax
+  taxes(active: Boolean, pagination: Pagination): [Tax!]!
+  taxRule(id: ID!): TaxRule
+  taxRules(taxRuleGroupId: ID, pagination: Pagination): [TaxRule!]!
+  taxRuleGroup(id: ID!): TaxRuleGroup
+  taxRuleGroups(active: Boolean, pagination: Pagination): [TaxRuleGroup!]!
+
+  # Inventory
+  stock(productId: ID!, combinationId: ID): Stock
+  stocks(warehouseId: ID, pagination: Pagination): [Stock!]!
+  stockAvailability(productId: ID!, combinationId: ID): StockAvailability
+  warehouse(id: ID!): Warehouse
+  warehouses(active: Boolean, pagination: Pagination): [Warehouse!]!
+
+  # Orders
+  order(id: ID!): Order
+  orders(filter: OrderFilter, pagination: Pagination): [Order!]!
+  orderState(id: ID!): OrderState
+  orderStates(pagination: Pagination): [OrderState!]!
+  orderSlip(id: ID!): OrderSlip
+  orderSlips(orderId: ID, pagination: Pagination): [OrderSlip!]!
+  orderInvoice(id: ID!): OrderInvoice
+  orderInvoices(orderId: ID, pagination: Pagination): [OrderInvoice!]!
+
+  # Customers
+  customer(id: ID!): Customer
+  customers(filter: CustomerFilter, pagination: Pagination): [Customer!]!
+  customerGroup(id: ID!): CustomerGroup
+  customerGroups(pagination: Pagination): [CustomerGroup!]!
+  customerThread(id: ID!): CustomerThread
+  customerThreads(customerId: ID, status: String, pagination: Pagination): [CustomerThread!]!
+
+  # Addresses & Geography
+  address(id: ID!): Address
+  addresses(customerId: ID, pagination: Pagination): [Address!]!
+  country(id: ID!): Country
+  countries(active: Boolean, zoneId: ID, pagination: Pagination): [Country!]!
+  state(id: ID!): State
+  states(countryId: ID, active: Boolean, pagination: Pagination): [State!]!
+  zone(id: ID!): Zone
+  zones(active: Boolean, pagination: Pagination): [Zone!]!
+
+  # Cart
+  cart(id: ID!): Cart
+  carts(customerId: ID, pagination: Pagination): [Cart!]!
+
+  # Shipping
+  carrier(id: ID!): Carrier
+  carriers(active: Boolean, pagination: Pagination): [Carrier!]!
+
+  # Currency
+  currency(id: ID!): Currency
+  currencies(active: Boolean, pagination: Pagination): [Currency!]!
+
+  # Internationalization
+  language(id: ID!): Language
+  languages(active: Boolean, pagination: Pagination): [Language!]!
+
+  # CMS
+  cmsCategory(id: ID!): CmsCategory
+  cmsCategories(parentId: ID, active: Boolean, pagination: Pagination): [CmsCategory!]!
+  cmsPage(id: ID!): CmsPage
+  cmsPages(cmsCategoryId: ID, active: Boolean, pagination: Pagination): [CmsPage!]!
+
+  # Administration
+  shop(id: ID!): Shop
+  shops(active: Boolean, pagination: Pagination): [Shop!]!
+  shopGroup(id: ID!): ShopGroup
+  shopGroups(active: Boolean, pagination: Pagination): [ShopGroup!]!
+  employee(id: ID!): Employee
+  employees(active: Boolean, profileId: ID, pagination: Pagination): [Employee!]!
+  profile(id: ID!): Profile
+  profiles(pagination: Pagination): [Profile!]!
+  module(id: ID!): Module
+  modules(active: Boolean, pagination: Pagination): [Module!]!
+  configuration(key: String!): Configuration
+  configurations(shopId: ID, pagination: Pagination): [Configuration!]!
+  hook(id: ID!): Hook
+  hooks(active: Boolean, pagination: Pagination): [Hook!]!
+
+  # Communication
+  contact(id: ID!): Contact
+  contacts(pagination: Pagination): [Contact!]!
+  webhook(id: ID!): Webhook
+  webhooks(active: Boolean, pagination: Pagination): [Webhook!]!
+}
+
+# ─────────────────────────────────────────
+# Mutation Root
+# ─────────────────────────────────────────
+
+input ProductInput {
+  reference: String
+  name: String!
+  description: String
+  descriptionShort: String
+  price: Decimal!
+  wholesalePrice: Decimal
+  weight: Decimal
+  categoryId: ID
+  manufacturerId: ID
+  supplierId: ID
+  taxRuleGroupId: ID
+  active: Boolean
+  type: ProductType
+  minimalQuantity: Int
+}
+
+input OrderStatusInput {
+  orderStateId: ID!
+  employeeId: ID
+}
+
+input CustomerInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String
+  gender: Gender
+  birthday: Date
+  active: Boolean
+  newsletter: Boolean
+  groupId: ID
+}
+
+input AddressInput {
+  alias: String
+  firstName: String!
+  lastName: String!
+  company: String
+  address1: String!
+  address2: String
+  postcode: String
+  city: String!
+  phone: String
+  phoneMobile: String
+  countryId: ID!
+  stateId: ID
+}
+
+input CartRuleInput {
+  name: String!
+  description: String
+  code: String
+  minimumAmount: Decimal
+  reductionPercent: Decimal
+  reductionAmount: Decimal
+  freeShipping: Boolean
+  active: Boolean
+  dateFrom: DateTime
+  dateTo: DateTime
+  quantity: Int
+  quantityPerUser: Int
+}
+
+input StockMovementInput {
+  stockId: ID!
+  employeeId: ID
+  reason: StockMovementReason!
+  sign: Int!
+  usableQuantity: Int!
+}
+
+input WebhookInput {
+  name: String!
+  url: String!
+  secret: String
+  active: Boolean
+  events: [String!]!
+}
+
+type Mutation {
+  # Products
+  createProduct(input: ProductInput!): Product!
+  updateProduct(id: ID!, input: ProductInput!): Product!
+  deleteProduct(id: ID!): Boolean!
+
+  # Orders
+  updateOrderStatus(orderId: ID!, input: OrderStatusInput!): Order!
+
+  # Customers
+  createCustomer(input: CustomerInput!): Customer!
+  updateCustomer(id: ID!, input: CustomerInput!): Customer!
+  deleteCustomer(id: ID!): Boolean!
+
+  # Addresses
+  createAddress(customerId: ID!, input: AddressInput!): Address!
+  updateAddress(id: ID!, input: AddressInput!): Address!
+  deleteAddress(id: ID!): Boolean!
+
+  # Cart
+  addToCart(cartId: ID!, productId: ID!, combinationId: ID, quantity: Int!): Cart!
+  removeFromCart(cartId: ID!, productId: ID!, combinationId: ID): Cart!
+  applyCartRule(cartId: ID!, code: String!): Cart!
+  removeCartRule(cartId: ID!, cartRuleId: ID!): Cart!
+
+  # Cart Rules / Vouchers
+  createCartRule(input: CartRuleInput!): CartRule!
+  updateCartRule(id: ID!, input: CartRuleInput!): CartRule!
+  deleteCartRule(id: ID!): Boolean!
+
+  # Stock
+  createStockMovement(input: StockMovementInput!): StockMovement!
+  updateStockAvailability(productId: ID!, combinationId: ID, quantity: Int!): StockAvailability!
+
+  # Configuration
+  setConfiguration(name: String!, value: String!, shopId: ID): Configuration!
+
+  # Webhooks
+  createWebhook(input: WebhookInput!): Webhook!
+  updateWebhook(id: ID!, input: WebhookInput!): Webhook!
+  deleteWebhook(id: ID!): Boolean!
+}
