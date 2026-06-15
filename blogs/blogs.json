@@ -1,12 +1,12 @@
 {
   "url": "https://build.prestashop-project.org/feed.xml",
-  "fetched": "2026-06-13",
+  "fetched": "2026-06-14T20:42:17Z",
   "posts": [
     {
-      "title": "OW2con'26 — two days of open source conversations with PrestaShop",
+      "title": "OW2con'26 \u2014 two days of open source conversations with PrestaShop",
       "date": "2026-06-04",
       "url": "https://build.prestashop-project.org/news/2026/ow2con26-open-source-conversations-prestashop/",
-      "description": "The conference took place June 2–3 at Orange Innovation Gardens in Paris–Châtillon, featuring practical discussions, a welcoming community, and high-quality conversations."
+      "description": "The conference took place June 2\u20133 at Orange Innovation Gardens in Paris\u2013Ch\u00e2tillon, featuring practical discussions, a welcoming community, and high-quality conversations."
     },
     {
       "title": "PrestaShop 9.1.4 and 8.2.7 are available",
@@ -92,5 +92,13 @@
       "url": "https://build.prestashop-project.org/news/2026/ecommerce-open-source-summit-2026-wrapup/",
       "description": "Event recap from March 26 featuring developers, agencies, and ecommerce professionals united by a shared commitment to open source ecommerce."
     }
-  ]
+  ],
+  "repo": "prestashop",
+  "feeds": [
+    {
+      "source": "https://www.linkedin.com/company/prestashop",
+      "error": "HTTPError"
+    }
+  ],
+  "post_count": 0
 }
