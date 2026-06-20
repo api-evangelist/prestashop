@@ -7,7 +7,7 @@ description: 'PrestaShop is an open-source e-commerce platform with a REST API f
   credentials for programmatic store management.
 
   '
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/prestashop/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -32,7 +32,7 @@ apis:
     API key.
 
     '
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://devdocs.prestashop-project.org/9/webservice/
   baseURL: https://{your-store}/api/
   tags:
@@ -63,7 +63,7 @@ apis:
     managing store configuration, products, orders, and other domain resources.
 
     '
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://devdocs.prestashop-project.org/9/admin-api/
   baseURL: https://{your-store}/api/
   tags:
