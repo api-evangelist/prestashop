@@ -1,104 +1,18 @@
 {
-  "url": "https://build.prestashop-project.org/feed.xml",
-  "fetched": "2026-06-14T20:42:17Z",
-  "posts": [
-    {
-      "title": "OW2con'26 \u2014 two days of open source conversations with PrestaShop",
-      "date": "2026-06-04",
-      "url": "https://build.prestashop-project.org/news/2026/ow2con26-open-source-conversations-prestashop/",
-      "description": "The conference took place June 2\u20133 at Orange Innovation Gardens in Paris\u2013Ch\u00e2tillon, featuring practical discussions, a welcoming community, and high-quality conversations."
-    },
-    {
-      "title": "PrestaShop 9.1.4 and 8.2.7 are available",
-      "date": "2026-06-04",
-      "url": "https://build.prestashop-project.org/news/2026/prestashop-9-1-4-and-8-2-7-available/",
-      "description": "Two maintenance releases published together to ensure a fresh download of either version ships with the patched Faceted Search module (ps_facetedsearch v4.0.4) right away."
-    },
-    {
-      "title": "Security update for the Faceted Search module (ps_facetedsearch)",
-      "date": "2026-06-03",
-      "url": "https://build.prestashop-project.org/news/2026/security-update-faceted-search-module-ps-facetedsearch/",
-      "description": "A security vulnerability was identified where specially crafted requests could be processed unsafely by the module and lead to the execution of unauthorized code on the server without requiring authentication."
-    },
-    {
-      "title": "PrestaShop Core Monthly - May 2026",
-      "date": "2026-06-01",
-      "url": "https://build.prestashop-project.org/news/2026/core-monthly-2026-05-01-2026-05-31/",
-      "description": "Monthly update highlighting a strong maintenance rhythm, two releases on the 9.1 branch, including work on conventions for AI tools and checkout features."
-    },
-    {
-      "title": "PS Summit 2026 - Call for Papers now open (Lyon)",
-      "date": "2026-05-28",
-      "url": "https://build.prestashop-project.org/news/2026/ps-summit-2026-call-for-papers-open/",
-      "description": "November conference in Lyon bringing together the open source ecommerce community and the wider ecosystem with PrestaShop and Sylius communities."
-    },
-    {
-      "title": "PrestaShop 9.1.3 is available",
-      "date": "2026-05-21",
-      "url": "https://build.prestashop-project.org/news/2026/prestashop-9-1-3-maintenance-release/",
-      "description": "Security maintenance release updating latest patch versions of two key upstream dependencies, Symfony and Twig, following their coordinated security advisories."
-    },
-    {
-      "title": "PrestaShop 9.1.2 is available",
-      "date": "2026-05-19",
-      "url": "https://build.prestashop-project.org/news/2026/prestashop-9-1-2-maintenance-release/",
-      "description": "First regular maintenance release for 9.1 branch, focused entirely on bug fixes, stability improvements, and dependency updates."
-    },
-    {
-      "title": "PrestaShop and OSPO Alliance - Turning Community Energy Into Impact",
-      "date": "2026-05-19",
-      "url": "https://build.prestashop-project.org/news/2026/prestashop-ospo-alliance-turning-community-energy-into-impact/",
-      "description": "Interview discussing what open source means at PrestaShop and how the company maintains a long-running project healthy, collaborative, and sustainable."
-    },
-    {
-      "title": "Teaching AI to speak PrestaShop",
-      "date": "2026-05-05",
-      "url": "https://build.prestashop-project.org/news/2026/teaching-ai-to-speak-prestashop/",
-      "description": "Exploration of how AI assistants can better understand PrestaShop's modern architecture to avoid producing outdated architectural patterns."
-    },
-    {
-      "title": "PrestaShop Core Monthly - April 2026",
-      "date": "2026-05-04",
-      "url": "https://build.prestashop-project.org/news/2026/core-monthly-2026-04-01-2026-04-30/",
-      "description": "Monthly summary noting a busy month in the codebase: a critical security release, fast iteration on bringing AI into the project's workflows."
-    },
-    {
-      "title": "PrestaShop 8.2.6 is available",
-      "date": "2026-04-28",
-      "url": "https://build.prestashop-project.org/news/2026/prestashop-8-2-6-security-release/",
-      "description": "Security patch addressing a critical stored Cross-Site Scripting vulnerability with urgent update recommendation."
-    },
-    {
-      "title": "PrestaShop 9.1.1 is available",
-      "date": "2026-04-28",
-      "url": "https://build.prestashop-project.org/news/2026/prestashop-9-1-1-security-release/",
-      "description": "Security patch for 9.1 branch addressing a critical stored Cross-Site Scripting vulnerability."
-    },
-    {
-      "title": "PrestaShop Core Monthly - March 2026",
-      "date": "2026-04-03",
-      "url": "https://build.prestashop-project.org/news/2026/core-monthly-2026-03-01-2026-03-31/",
-      "description": "March milestone including 9.1 release shipped with Hummingbird 2.0 as the default theme and the inaugural Ecommerce Open Source Summit."
-    },
-    {
-      "title": "PrestaShop Live Update - March 2026",
-      "date": "2026-04-01",
-      "url": "https://build.prestashop-project.org/news/2026/live-update-march-2026/",
-      "description": "Live stream featuring new leadership addressing the community questions, and shared their perspective on the project's direction plus One Page Checkout insights."
-    },
-    {
-      "title": "Ecommerce Open Source Summit 2026 - a wrap-up",
-      "date": "2026-03-26",
-      "url": "https://build.prestashop-project.org/news/2026/ecommerce-open-source-summit-2026-wrapup/",
-      "description": "Event recap from March 26 featuring developers, agencies, and ecommerce professionals united by a shared commitment to open source ecommerce."
-    }
-  ],
   "repo": "prestashop",
   "feeds": [
+    {
+      "source": "https://build.prestashop-project.org/feed.xml",
+      "feed_url": "https://build.prestashop-project.org/feed.xml",
+      "title": "",
+      "saved": 1,
+      "method": "feed"
+    },
     {
       "source": "https://www.linkedin.com/company/prestashop",
       "error": "HTTPError"
     }
   ],
-  "post_count": 0
+  "fetched": "2026-06-27T12:03:07Z",
+  "post_count": 1
 }
