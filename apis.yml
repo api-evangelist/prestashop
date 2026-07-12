@@ -84,6 +84,8 @@ apis:
     url: https://devdocs.prestashop-project.org/
     email: ''
 common:
+- type: DomainSecurity
+  url: security/prestashop-domain-security.yml
 - type: Website
   url: https://www.prestashop.com/
 - type: Documentation

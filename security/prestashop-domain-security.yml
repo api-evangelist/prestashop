@@ -1,0 +1,26 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.prestashop.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug  5 08:30:43 2026 GMT
+  hsts: false
+- host: devdocs.prestashop-project.org
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 22 14:15:08 2026 GMT
+  hsts: false
+domains:
+- domain: prestashop.com
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine
+- domain: prestashop-project.org
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false
