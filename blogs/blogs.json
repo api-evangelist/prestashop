@@ -5,14 +5,17 @@
       "source": "https://build.prestashop-project.org/feed.xml",
       "feed_url": "https://build.prestashop-project.org/feed.xml",
       "title": "",
-      "saved": 1,
+      "saved": 0,
       "method": "feed"
     },
     {
       "source": "https://www.linkedin.com/company/prestashop",
-      "error": "HTTPError"
+      "feed_url": "https://www.linkedin.com/company/prestashop",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-06-27T12:03:07Z",
-  "post_count": 1
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 15
 }
