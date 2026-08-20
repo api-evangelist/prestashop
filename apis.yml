@@ -26,6 +26,17 @@ modified: '2026-06-13'
 specificationVersion: '0.23'
 tags:
 - E-Commerce
+- Open-Source
+- Product
+- Order
+- Customers
+- Inventory
+- Catalog
+- Carriers
+- Stock
+- Tax
+tags_raw:
+- E-Commerce
 - Open Source
 - Products
 - Orders
@@ -48,6 +59,12 @@ apis:
   humanURL: https://devdocs.prestashop-project.org/9/webservice/
   baseURL: https://{your-store}/api/
   tags:
+  - Product
+  - Order
+  - Customers
+  - Inventory
+  - E-Commerce
+  tags_raw:
   - Products
   - Orders
   - Customers
@@ -79,6 +96,12 @@ apis:
   humanURL: https://devdocs.prestashop-project.org/9/admin-api/
   baseURL: https://{your-store}/api/
   tags:
+  - Admin
+  - Authentication
+  - Product
+  - Order
+  - E-Commerce
+  tags_raw:
   - Admin
   - OAuth 2.0
   - Products
