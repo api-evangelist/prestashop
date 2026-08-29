@@ -7,6 +7,18 @@ description: 'PrestaShop is an open-source e-commerce platform with a REST API f
   credentials for programmatic store management.
 
   '
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: unknown
@@ -119,6 +131,14 @@ apis:
     url: https://devdocs.prestashop-project.org/
     email: ''
 common:
+- type: IssueTracker
+  url: https://github.com/PrestaShop/PrestaShop/issues
+- type: Releases
+  url: https://github.com/PrestaShop/PrestaShop/releases
+- type: CodeOfConduct
+  url: https://github.com/PrestaShop/PrestaShop/blob/develop/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/PrestaShop/PrestaShop/blob/develop/CONTRIBUTING.md
 - type: DomainSecurity
   url: security/prestashop-domain-security.yml
 - type: Website
