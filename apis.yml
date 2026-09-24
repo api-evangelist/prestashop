@@ -38,7 +38,7 @@ modified: '2026-06-13'
 specificationVersion: '0.23'
 tags:
 - E-Commerce
-- Open-Source
+- Open Source
 - Product
 - Order
 - Customers
@@ -58,6 +58,7 @@ tags_raw:
 - Carriers
 - Stock
 - Tax
+- Open-Source
 apis:
 - name: PrestaShop Webservice API
   description: 'The PrestaShop Webservice API enables third-party applications to
@@ -91,8 +92,6 @@ apis:
     url: https://devdocs.prestashop-project.org/9/webservice/getting-started/#create-an-access-key
   - type: GitHubRepository
     url: https://github.com/PrestaShop/PrestaShop
-  - url: graphql/prestashop-graphql.md
-    type: GraphQL
   contact:
   - FN: PrestaShop Developer Community
     url: https://devdocs.prestashop-project.org/
