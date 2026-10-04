@@ -1,27 +1,25 @@
-# Kin Score artifact — prestashop — 2026-08-29T213958
+# Kin Score artifact — prestashop — 2026-09-24T090406
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: prestashop
-  schema_version: 0.16.0
-  scored_at: '2026-08-29'
-  run_ts: 2026-08-29T213958
-  composite: 43.5
-  band: developing
+  schema_version: 0.22.0
+  scored_at: '2026-09-24'
+  run_ts: 2026-09-24T090406
+  composite: 31.0
+  band: thin
   facets:
     discoverability: 68.5
-    contract_quality: 41.5
-    governance: 0.0
+    contract_quality: 0.0
+    contract_governance: 0.0
     operational_transparency: 68.4
     developer_ergonomics: 35.7
-    commercial_clarity: 50.0
-    contract_governance: 0.0
     access_clarity: 50.0
   agent_readiness:
-    score: 18.0
-    band: agent-aware
+    score: 5.0
+    band: human-only
     dimensions:
-      spec_presence: true
+      spec_presence: false
       agentic_access: false
       reversibility_documented: false
       mcp_server: false
@@ -46,6 +44,3 @@ kin_score:
     regime_id: telecommunications
     score: 16.7
     matched_via: tags
-  open_source:
-    applies: true
-    score: 65.0

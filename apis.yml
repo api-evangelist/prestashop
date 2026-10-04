@@ -9,6 +9,10 @@ description: 'PrestaShop is an open-source e-commerce platform with a REST API f
   '
 deliveryModel:
   model: unknown
+  license_evidence:
+    repo: prestashop/prestashop
+    spdx: NOASSERTION
+    stars: 9219
   open_source: unknown
   commercial: true
   callable_host: false
@@ -17,7 +21,7 @@ deliveryModel:
   source:
   - pricing
   - repository-unlicensed
-  generated: '2026-08-28'
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: enterprise
