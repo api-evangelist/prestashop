@@ -76,3 +76,29 @@ plans:
       access: true
       authentication: OAuth 2.0 (client credentials)
       resources: Full CRUD access to 60+ Webservice resources plus Admin API endpoints
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  units: []
+  plans:
+  - name: Classic
+    access: free
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Hosted
+    access: paid
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: paid
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
