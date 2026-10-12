@@ -1,0 +1,19 @@
+# DERIVED by build-integration-preconfigs.py (roadmap#949). Overlay on the PARTNER's contract:
+# where klaviyo's enum names prestashop, and what that value is.
+overlay: 1.0.0
+info:
+  title: prestashop as a processor-connection in klaviyo's contract
+  version: 1.0.0
+extends: https://raw.githubusercontent.com/api-evangelist/klaviyo/refs/heads/main/openapi/klaviyo-forms-api-openapi.yml
+actions:
+- target: $.components.schemas.UniqueCouponConfig.properties.integration
+  update:
+    x-apievangelist-integration:
+      values:
+        prestashop:
+          provider: prestashop
+          relationship: processor-connection
+          evidence: https://github.com/api-evangelist/klaviyo/blob/main/openapi/klaviyo-forms-api-openapi.yml
+      method: derived
+      generated: '2026-10-12'
+      generator: build-integration-preconfigs.py

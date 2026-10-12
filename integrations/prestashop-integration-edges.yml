@@ -1,0 +1,76 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/prestashop/integrations
+- https://n8n.io/integrations/prestashop/
+- https://composio.dev/toolkits/prestashop
+- https://monid.ai/tools/prestashop
+checked:
+- https://composio.dev/toolkits/prestashop
+- https://monid.ai/tools/prestashop
+- https://n8n.io/integrations/prestashop/
+- https://zapier.com/apps/prestashop/integrations
+summary: null
+marketplace_apps: []
+edges:
+- partner_name: ankorstore
+  partner: ankorstore
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/ankorstore/blob/main/openapi/ankorstore-integration-api-openapi.yml
+  contract_reference:
+    repo: ankorstore
+    spec_file: ankorstore-integration-api-openapi.yml
+    value: prestashop
+    property: requestBody.content.platform
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+- partner_name: bolt-financial
+  partner: bolt-financial
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/bolt-financial/blob/main/openapi/bolt-financial-transactions-api-openapi.yml
+  contract_reference:
+    repo: bolt-financial
+    spec_file: bolt-financial-transactions-api-openapi.yml
+    value: prestashop
+    property: schemas.merchant_platform
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+- partner_name: channable
+  partner: channable
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/channable/blob/main/openapi/channable-orders-api-openapi.yml
+  contract_reference:
+    repo: channable
+    spec_file: channable-orders-api-openapi.yml
+    value: prestashop
+    property: components.schemas.PlatformName
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+- partner_name: klaviyo
+  partner: klaviyo
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/klaviyo/blob/main/openapi/klaviyo-forms-api-openapi.yml
+  contract_reference:
+    repo: klaviyo
+    spec_file: klaviyo-forms-api-openapi.yml
+    value: prestashop
+    property: UniqueCouponConfig.integration.default
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+templates: []

@@ -1,0 +1,19 @@
+# DERIVED by build-integration-preconfigs.py (roadmap#949). Overlay on the PARTNER's contract:
+# where channable's enum names prestashop, and what that value is.
+overlay: 1.0.0
+info:
+  title: prestashop as a processor-connection in channable's contract
+  version: 1.0.0
+extends: https://raw.githubusercontent.com/api-evangelist/channable/refs/heads/main/openapi/channable-orders-api-openapi.yml
+actions:
+- target: $.components.schemas.PlatformName
+  update:
+    x-apievangelist-integration:
+      values:
+        prestashop:
+          provider: prestashop
+          relationship: processor-connection
+          evidence: https://github.com/api-evangelist/channable/blob/main/openapi/channable-orders-api-openapi.yml
+      method: derived
+      generated: '2026-10-12'
+      generator: build-integration-preconfigs.py

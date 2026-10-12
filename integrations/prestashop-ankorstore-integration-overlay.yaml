@@ -1,0 +1,30 @@
+# DERIVED by build-integration-preconfigs.py (roadmap#949). Overlay on the PARTNER's contract:
+# where ankorstore's enum names prestashop, and what that value is.
+overlay: 1.0.0
+info:
+  title: prestashop as a processor-connection in ankorstore's contract
+  version: 1.0.0
+extends: https://raw.githubusercontent.com/api-evangelist/ankorstore/refs/heads/main/openapi/ankorstore-integration-api-openapi.yml
+actions:
+- target: $.paths['/api/v1/integration/external-integrations/-actions/update-status'].post.requestBody.content['application/json'].schema.properties.platform
+  update:
+    x-apievangelist-integration:
+      values:
+        prestashop:
+          provider: prestashop
+          relationship: processor-connection
+          evidence: https://github.com/api-evangelist/ankorstore/blob/main/openapi/ankorstore-integration-api-openapi.yml
+      method: derived
+      generated: '2026-10-12'
+      generator: build-integration-preconfigs.py
+- target: $.paths['/api/v1/integration/external-integrations/-actions/update-status'].post.responses['200'].content['application/vnd.api+json'].schema.properties.data.properties.attributes.properties.platform
+  update:
+    x-apievangelist-integration:
+      values:
+        prestashop:
+          provider: prestashop
+          relationship: processor-connection
+          evidence: https://github.com/api-evangelist/ankorstore/blob/main/openapi/ankorstore-integration-api-openapi.yml
+      method: derived
+      generated: '2026-10-12'
+      generator: build-integration-preconfigs.py
